@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Navia (n8n)</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    #chatbox { width: 100%; height: 300px; border: 1px solid #ccc; overflow-y: auto; padding: 10px; }
+    input, button { margin-top: 1rem; width: 100%; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Asistente de Navia</h2>
+  <div id="chatbox"></div>
+  <input type="text" id="input" placeholder="Escribe tu mensaje..." />
+  <button onclick="sendMessage()">Enviar</button>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+    const input = document.getElementById("input");
+
+    function appendMessage(text, from = "user") {
+      const msg = document.createElement("div");
+      msg.textContent = (from === "user" ? "👤 " : "🤖 ") + text;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const text = input.value;
+      if (!text) return;
+      appendMessage(text, "user");
+      input.value = "";
+
+      const res = await fetch("	webhookUrl: 'https://cursonavia2025.app.n8n.cloud/webhook/56b59fe6-ae9b-449c-99c7-54bddb38135a/chat',
+", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mensaje: text })
+      });
+      const data = await res.json();
+      appendMessage(data.respuesta, "bot");
+    }
+  </script>
+</body>
+</html>
