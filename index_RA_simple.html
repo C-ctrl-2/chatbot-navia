@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>RA Navia - Mínimo</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      #loading {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading">Cargando RA... activa la cámara si se solicita</div>
+    
+    <a-scene
+      mindar-image="imageTargetSrc: ./targets.mind; autoStart: true;"
+      color-space="sRGB"
+      embedded
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: true"
+      renderer="colorManagement: true, physicallyCorrectLights"
+    >
+      <a-assets>
+        <img id="navia" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Navia_playa_Frexulfe.jpg/320px-Navia_playa_Frexulfe.jpg">
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-image src="#navia" position="0 0 0" width="1.5" height="1"></a-image>
+        <a-text value='¡Hola desde Navia!' position="0 -0.8 0" color="white" align="center"></a-text>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
